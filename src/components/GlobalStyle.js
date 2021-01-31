@@ -31,9 +31,13 @@ const GlobalStyle = createGlobalStyle`
         p{
             font-size:1rem;
             line-height:200%;
+            color:black;
         }
         a{
             text-decoration:none;
+        }
+        img{
+            display:block;
         }
     }
 
