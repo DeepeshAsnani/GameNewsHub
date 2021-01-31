@@ -2,6 +2,7 @@ const initState = {
   popularGames: [],
   newGames: [],
   upcomingGames: [],
+  isLoading: true,
 };
 export const gameReducer = (state = initState, action) => {
   switch (action.type) {
@@ -11,6 +12,12 @@ export const gameReducer = (state = initState, action) => {
         popularGames: action.payload.popular,
         newGames: action.payload.newGames,
         upcomingGames: action.payload.upcoming,
+        isLoading: false,
+      };
+    case "LOADING":
+      return {
+        ...state,
+        isLoading: true,
       };
     default:
       return { ...state };

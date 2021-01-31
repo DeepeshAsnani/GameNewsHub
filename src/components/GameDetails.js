@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 //Redux
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { smallImg } from "../utils";
 
 function GameDetails() {
   const history = useHistory();
@@ -36,7 +37,14 @@ function GameDetails() {
               </Info>
             </Stats>
             <Media>
-              <img src={game.background_image} alt="image" />
+              <img
+                src={
+                  game.background_image
+                    ? smallImg(game.background_image, 1280)
+                    : ""
+                }
+                alt="image"
+              />
             </Media>
 
             <Description>
@@ -46,15 +54,27 @@ function GameDetails() {
             <h3>ScreenShots:</h3>
             <Gallery>
               {screenshots.results.map((screen) => (
-                <img src={screen.image} key={screen.id} alt="game" />
+                <img
+                  src={screen.image ? smallImg(screen.image, 1280) : ""}
+                  key={screen.id}
+                  alt="game"
+                />
               ))}
             </Gallery>
             <h3>Video</h3>
-            <Video>
-              <video controls>
-                <source src={game.clip.clips.full} />
-              </video>
-            </Video>
+            {game.clip ? (
+              <Video>
+                <video controls>
+                  <source
+                    src={
+                      game.clip.clips.full != null ? game.clip.clips.full : ""
+                    }
+                  />
+                </video>
+              </Video>
+            ) : (
+              <h5>Sorry No Video Available for this game</h5>
+            )}
           </Detail>
         </CardShadow>
       )}

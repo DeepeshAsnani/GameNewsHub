@@ -21,47 +21,49 @@ function Home() {
     (state) => state.game
   );
   return (
-    <GameList>
-      {pathId && <GameDetails />}
-      <h2>Upcoming Games </h2>
-      <Games>
-        {upcomingGames.map((game) => (
-          <Game
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-            id={game.id}
-            key={game.id}
-          />
-        ))}
-      </Games>
-      {/* ========== PopularGames ============*/}
-      <h2>Popular Games </h2>
-      <Games>
-        {popularGames.map((game) => (
-          <Game
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-            id={game.id}
-            key={game.id}
-          />
-        ))}
-      </Games>
-      {/* ========== NewGames ============*/}
-      <h2>New Games </h2>
-      <Games>
-        {newGames.map((game) => (
-          <Game
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-            id={game.id}
-            key={game.id}
-          />
-        ))}
-      </Games>
-    </GameList>
+    <>
+      <GameList>
+        {pathId && <GameDetails />}
+        <h2>Upcoming Games </h2>
+        <Games>
+          {upcomingGames.map((game) => (
+            <Game
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+              id={game.id}
+              key={game.id}
+            />
+          ))}
+        </Games>
+        {/* ========== PopularGames ============*/}
+        <h2>Popular Games </h2>
+        <Games>
+          {popularGames.map((game) => (
+            <Game
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+              id={game.id}
+              key={game.id}
+            />
+          ))}
+        </Games>
+        {/* ========== NewGames ============*/}
+        <h2>New Games </h2>
+        <Games>
+          {newGames.map((game) => (
+            <Game
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+              id={game.id}
+              key={game.id}
+            />
+          ))}
+        </Games>
+      </GameList>
+    </>
   );
 }
 

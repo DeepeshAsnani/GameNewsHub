@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { loadGameDetails } from "../actions/gameDetailsAction";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { smallImg } from "../utils";
 
 function Game({ name, released, image, id }) {
   const dispatch = useDispatch();
@@ -13,13 +14,15 @@ function Game({ name, released, image, id }) {
     dispatch(loadGameDetails(id));
   };
   return (
-    <StyledGame onClick={loadDetailHandler}>
-      <Link to={`/game/${id}`}>
-        <h3>{name}</h3>
-        <p>{released}</p>
-        <img src={image} alt={name} />
-      </Link>
-    </StyledGame>
+    <>
+      <StyledGame onClick={loadDetailHandler}>
+        <Link to={`/game/${id}`}>
+          <h3>{name}</h3>
+          <p>{released}</p>
+          <img src={image ? smallImg(image, 640) : ""} alt={name} />
+        </Link>
+      </StyledGame>
+    </>
   );
 }
 const StyledGame = styled(motion.div)`
