@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { smallImg } from "../utils";
 
-function GameDetails() {
+function GameDetails({ pathId }) {
   const history = useHistory();
   const { game, screenshots, isLoading } = useSelector((state) => state.detail);
   const togglehandler = (e) => {
@@ -21,10 +21,10 @@ function GameDetails() {
     <>
       {!isLoading && (
         <CardShadow className="shadow" onClick={togglehandler}>
-          <Detail>
+          <Detail layoutId={pathId}>
             <Stats>
               <div className="rating">
-                <h3>{game.name}</h3>
+                <motion.h3 layoutId={`title ${pathId}`}>{game.name}</motion.h3>
                 <p>Rating: {game.rating}</p>
               </div>
               <Info>
@@ -37,13 +37,15 @@ function GameDetails() {
               </Info>
             </Stats>
             <Media>
-              <img
+              <motion.img
+                layoutId={`image ${pathId}`}
                 src={
                   game.background_image
                     ? smallImg(game.background_image, 1280)
                     : ""
                 }
                 alt="image"
+                className="coverpic"
               />
             </Media>
 
@@ -54,10 +56,11 @@ function GameDetails() {
             <h3>ScreenShots:</h3>
             <Gallery>
               {screenshots.results.map((screen) => (
-                <img
+                <motion.img
                   src={screen.image ? smallImg(screen.image, 1280) : ""}
                   key={screen.id}
                   alt="game"
+                  className="screenShotsPic"
                 />
               ))}
             </Gallery>
@@ -65,11 +68,7 @@ function GameDetails() {
             {game.clip ? (
               <Video>
                 <video controls>
-                  <source
-                    src={
-                      game.clip.clips.full != null ? game.clip.clips.full : ""
-                    }
-                  />
+                  <source src={game.clip.clips.full} />
                 </video>
               </Video>
             ) : (
@@ -87,6 +86,7 @@ const CardShadow = styled(motion.div)`
   overflow-y: scroll;
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
+  z-index: 5;
   top: 0;
   left: 0;
   &::-webkit-scrollbar {
@@ -105,11 +105,8 @@ const Detail = styled(motion.div)`
   border-radius: 1rem;
   background: white;
   position: absolute;
-
+  z-index: 10;
   left: 10%;
-  img {
-    width: 100%;
-  }
 `;
 const Stats = styled(motion.div)`
   display: flex;
@@ -126,7 +123,7 @@ const PlatForm = styled(motion.div)`
 `;
 const Media = styled(motion.div)`
   margin-top: 4rem;
-  img {
+  .coverpic {
     width: 100%;
   }
 `;
@@ -138,6 +135,9 @@ const Gallery = styled(motion.div)`
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-column-gap: 2rem;
   grid-row-gap: 2rem;
+  .screenShotsPic {
+    width: 100%;
+  }
 `;
 const Video = styled(motion.div)`
   video {
