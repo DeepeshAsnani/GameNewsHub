@@ -1,20 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 // Styled Components
 import styled from "styled-components";
 import { motion } from "framer-motion";
 //Import logo
 import logo from "../img/logo.svg";
+
+import { fetchSearch } from "../actions/gameActions";
+import { useDispatch } from "react-redux";
+
 function Nav() {
+  const dispatch = useDispatch();
+  const [text, setText] = useState("");
+  const textHandler = (e) => {
+    setText(e.target.value);
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(fetchSearch(text));
+    setText("");
+  };
+  const clearHandler = () => {
+    dispatch({ type: "FETCH_CLEAR" });
+  };
   return (
     <StyledNav>
-      <Logo>
+      <Logo onClick={clearHandler}>
         <img src={logo} alt="logo" />
         <h4>UAF | HOKAGE Gaming </h4>
       </Logo>
-      <div className="search">
-        <input type="text" />
-        <button>Search</button>
-      </div>
+      <form className="serach">
+        <input onChange={textHandler} type="text" value={text} />
+        <button onClick={submitHandler}>Search</button>
+      </form>
     </StyledNav>
   );
 }

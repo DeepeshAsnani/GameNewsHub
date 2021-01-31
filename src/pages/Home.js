@@ -17,7 +17,7 @@ function Home() {
   }, [dispatch]);
   const location = useLocation();
   const pathId = location.pathname.split("/")[2];
-  const { popularGames, upcomingGames, newGames } = useSelector(
+  const { popularGames, upcomingGames, newGames, searched } = useSelector(
     (state) => state.game
   );
   return (
@@ -27,6 +27,28 @@ function Home() {
           <AnimatePresence>
             {pathId && <GameDetails pathId={pathId} />}
           </AnimatePresence>
+
+          {/* ========== SearchedGames ============*/}
+          {searched.length ? (
+            <div>
+              <h2>Searched Games </h2>
+              <Games>
+                {searched.map((game) => (
+                  <Game
+                    name={game.name}
+                    released={game.released}
+                    image={game.background_image}
+                    id={game.id}
+                    key={game.id}
+                  />
+                ))}
+              </Games>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {/* ========== UpcomingGames ============*/}
           <h2>Upcoming Games </h2>
           <Games>
             {upcomingGames.map((game) => (
